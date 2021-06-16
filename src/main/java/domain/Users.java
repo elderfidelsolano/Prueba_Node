@@ -5,7 +5,7 @@
  */
 package domain;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -68,6 +68,8 @@ public class Users {
     public static void setListatokens(List<Tokens> aListatokens) {
         listatokens = aListatokens;
     }
+
+  
     public int getUser_id() {
         return user_id;
     }
