@@ -49,7 +49,7 @@ public class PoemDaoJDBC {
                 int poem_id = rs.getInt("poem_id");
                 String title = rs.getString("title");
                 String poem = rs.getString("poem");
-                String date_submitted = rs.getString("date_submitted");
+                String date_submitted = rs.getString("data_submitted");
                 int categoryid = rs.getInt("categoryid");
                 int userid = rs.getInt("userid");
                 String date_approved = rs.getString("date_approved");

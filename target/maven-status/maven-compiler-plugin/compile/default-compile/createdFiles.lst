@@ -2,6 +2,10 @@ conexion\UsersDaoJDBC.class
 domain\Categories.class
 test\TestConexionUsers.class
 domain\Users.class
+conexion\TokensDaoJDBC.class
+test\TestConexionPoem.class
 conexion\Conexion.class
+conexion\PoemDaoJDBC.class
+test\TestConexionTokens.class
 domain\Poem.class
 domain\Tokens.class

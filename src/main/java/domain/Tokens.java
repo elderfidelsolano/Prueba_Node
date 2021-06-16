@@ -14,6 +14,10 @@ public class Tokens {
     public Tokens() {
     }
 
+    public Tokens(int token_id) {
+        this.token_id = token_id;
+    }
+
     public Tokens(String token, Users usuario, Date date_expired) {
         this.token = token;
         this.usuario = usuario;
