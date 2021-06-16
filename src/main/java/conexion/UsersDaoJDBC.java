@@ -105,7 +105,7 @@ public class UsersDaoJDBC {
             stmt.setString(4, usuario.getUsername());
             stmt.setString(5, usuario.getPass_phrase());
             stmt.setInt(6, usuario.getIs_admin());
-            stmt.setDate(7, new java.sql.Date(usuario.getDate_registered().getTime()) );
+            stmt.setDate(7, new java.sql.Date(usuario.getDate_registered().getTime()));
             stmt.setString(8, usuario.getProfile_pic());
             stmt.setInt(9, usuario.getRegistration_cponfirmed());
 //            stmt.setString(3, persona.getEmail());
@@ -128,13 +128,7 @@ public class UsersDaoJDBC {
 
     }
 
-//    public int actualizar(PersonaDTO persona) throws SQLException{
-//       
-//    }
-//    
-//    public int eliminar(PersonaDTO persona) throws SQLException{
-//
-//    }
+
     public int update(Users usuario) throws SQLException {
         Connection con = null;
         PreparedStatement stmt = null;
@@ -172,22 +166,21 @@ public class UsersDaoJDBC {
 
     }
 
-    
     public int delete(Users usuario) throws SQLException {
-                Connection con = null;
+        Connection con = null;
         PreparedStatement stmt = null;
         int resultado = 0;
-        
+
         try {
             con = this.conexionTransaccional != null ? this.conexionTransaccional : Conexion.getConnection();
             stmt = con.prepareStatement(SQL_DELETE);
-            stmt.setInt(1,usuario.getUser_id());
+            stmt.setInt(1, usuario.getUser_id());
             resultado = stmt.executeUpdate();
             System.out.println("Se ha eliminado el usuario");
-        }finally{
+        } finally {
             try {
                 close(stmt);
-               if (this.conexionTransaccional == null) {
+                if (this.conexionTransaccional == null) {
                     close(con);
                 }
             } catch (SQLException ex) {
@@ -197,7 +190,4 @@ public class UsersDaoJDBC {
         return resultado;
     }
 
-    
-   
-     
 }

@@ -5,7 +5,7 @@
  */
 package domain;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 public class Poem {
@@ -15,8 +15,9 @@ public class Poem {
     private Date date_submitted;
     private Categories categoria;
     private Users usuario;
-    private List<Users> listaUsuarios;
-    private List<Categories> listaCategorias;
+   /* private List<Users> listaUsuarios;
+    private List<Categories> listaCategorias;*/
+    private Date date_approved;
 
     public Poem() {
     }
@@ -25,25 +26,34 @@ public class Poem {
         this.poem_id = poem_id;
     }
 
-    public Poem(String title, String poem, Date date_submitted, Categories categoria, Users usuario) {
+    public Poem(String title, String poem, Date date_submitted, Categories categoria, Users usuario, Date date_approved) {
         this.title = title;
         this.poem = poem;
         this.date_submitted = date_submitted;
         this.categoria = categoria;
         this.usuario = usuario;
-        listaUsuarios.add(usuario);
-        listaCategorias.add(categoria);
+        /*
+        this.listaUsuarios = listaUsuarios;
+        this.listaCategorias = listaCategorias;*/
+        this.date_approved = date_approved;
     }
 
-    public Poem(int poem_id, String title, String poem, Date date_submitted, Categories categoria, Users usuario) {
+  
+
+    public Poem(int poem_id, String title, String poem, Date date_submitted, Categories categoria, Users usuario, Date date_approved) {
         this.poem_id = poem_id;
         this.title = title;
         this.poem = poem;
         this.date_submitted = date_submitted;
         this.categoria = categoria;
         this.usuario = usuario;
+        /*
+        this.listaUsuarios = listaUsuarios;
+        this.listaCategorias = listaCategorias;*/
+        this.date_approved = date_approved;
     }
-    
+
+  
     
 
     public int getPoem_id() {
@@ -70,12 +80,12 @@ public class Poem {
         this.poem = poem;
     }
 
-    public Date getDate_submitted() {
-        return date_submitted;
+    public Date getDate_approved() {
+        return date_approved;
     }
 
-    public void setDate_submitted(Date date_submitted) {
-        this.date_submitted = date_submitted;
+    public void setDate_approved(Date date_approved) {
+        this.date_approved = date_approved;
     }
 
     public Categories getCategoria() {
@@ -93,7 +103,7 @@ public class Poem {
     public void setUsuario(Users usuario) {
         this.usuario = usuario;
     }
-
+/*
     public List<Users> getListaUsuarios() {
         return listaUsuarios;
     }
@@ -108,6 +118,14 @@ public class Poem {
 
     public void setListaCategorias(List<Categories> listaCategorias) {
         this.listaCategorias = listaCategorias;
+    }
+*/
+    public Date getDate_submitted() {
+        return date_submitted;
+    }
+
+    public void setDate_submitted(Date date_submitted) {
+        this.date_submitted = date_submitted;
     }
             
                                                                                                                                                                     
