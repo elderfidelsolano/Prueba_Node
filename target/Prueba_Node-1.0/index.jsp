@@ -71,6 +71,12 @@
                     <td class="columna">
                         Token (*)
                     </td>
+                    <td class="columna">
+                        Eliminar (*)  
+                    </td>
+                    <td class="columna">
+                        Actualizar (*) 
+                    </td>
                 </tr>
                 <%for (Users usuario1 : lista) {
                         System.out.println("Nombre " + usuario1.getFirst_name());
@@ -133,23 +139,28 @@
                     %>
                     
                     <td>
-                        <div class="datos">
+                        
                             <%if (tokens.getToken().equals("all")) {%> 
-                               All <input  type="checkbox" name="token" value="all" checked/>
-                               
+                               All <input  type="checkbox" name="token" value="all" checked class="ck"/>
+                               &nbsp;
                             <%}%>
                             <%if (tokens.getToken().equals("part")) {%>
-                               Part <input  type="checkbox" name="token" value="part" checked/>
+                               Part <input  type="checkbox" name="token" value="part" checked class="ck"/>
                             <%}%>
-                            <%if (!tokens.getToken().equals("all") && !tokens.getToken().equals("part")) {%>
-                                All <input  type="checkbox" name="token" value="all"/>
-                                Part <input  type="checkbox" name="token" value="part"/>
-                            <%}%>
-                        </div>
+                            
+                        
+                        <%}%>
+                    
 
                     </td>
-                    <%}%>
-                    <%}%>
+                    
+                    <td>
+                        <input type="submit" value="Eliminar" class="default"/>
+                    </td>
+                    <td>
+                        <input type="submit" value="Actualizar" class="default"/>
+                    </td>
+                 <%}%>   
                 </tr>               
                 <!-- <tr>
                     <td class="columna">
@@ -211,14 +222,7 @@
                         </textarea>
                     <td>
                 </tr> -->
-                <tr style="text-align: center">
-                    <td>
-                        <input type="reset" value="Limpiar" class="default"/>
-                    </td>
-                    <td>
-                        <input type="submit" value="Enviar" class="default"/>
-                    </td>
-                </tr>
+                
             </table>
         </form>
     </body> 

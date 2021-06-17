@@ -1,0 +1,1 @@
+SELECT token_id, token, user_id, token_expires FROM prueba_node.tokens 

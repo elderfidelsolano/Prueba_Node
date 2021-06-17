@@ -4,6 +4,7 @@ body , .default{
     font-size: 12px;
     color: #669;
 }
+.ck{width: 10px; }
 #enfasis-columna{
     margin: 45px;
     width:480px;
