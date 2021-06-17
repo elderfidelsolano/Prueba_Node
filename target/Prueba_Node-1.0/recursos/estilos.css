@@ -36,4 +36,8 @@ body , .default{
     color:#339;
     background: #eff2ff
 }
+.datos{
+    width: 40px;
+    background: red;
+}
                     

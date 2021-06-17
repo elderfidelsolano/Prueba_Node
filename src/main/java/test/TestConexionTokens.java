@@ -32,8 +32,8 @@ public class TestConexionTokens {
             conexion = Conexion.getConnection();
             TokensDaoJDBC token = new TokensDaoJDBC(conexion);
 
-                /*Listar tokens
-            lista=token.select();
+                //Listar tokens
+            lista=token.select_id(new Users(2));
             SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             //Date fecha = (Date) formato.(token_expires);
             
@@ -43,7 +43,7 @@ public class TestConexionTokens {
                 System.out.print("Id Usuario ="+ rs.getUsuario().getUser_id()+ ", ");
                 System.out.print("Fecha ="+  formato.format(rs.getDate_expired()));
                 System.out.println(" ");
-            }*/
+            }
                 /*Insertar token
             String fecha_c= "2021-04-05)";
             SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
@@ -68,10 +68,13 @@ public class TestConexionTokens {
             tokenAct.setDate_expired(fecha_f);
             token.update(tokenAct);
             */
+                /*
                 //Eliminar token
-            token.delete(new Tokens(7));
+            token.delete(new Tokens(7));*/
         } catch (SQLException ex) {
             ex.printStackTrace(System.out);
+        } catch (ParseException ex) {
+            Logger.getLogger(TestConexionTokens.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
