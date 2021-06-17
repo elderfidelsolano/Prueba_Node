@@ -14,11 +14,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class PoemDaoJDBC {
     private Connection conexionTransaccional;
-
+    public static final String driver = "com.mysql.jdbc.Driver";
     public static final String SQL_SELECT = "SELECT poem_id, title, poem, data_submitted, categoryid, userid, date_approved FROM prueba_node.poems";
     public static final String SQL_INSERT = "INSERT INTO prueba_node.poems(title, poem, data_submitted, categoryid, userid, date_approved) VALUES(?, ?, ?, ?, ?, ?)";
     public static final String SQL_UPDATE = "UPDATE prueba_node.poems SET title=?, poem = ?, data_submitted= ? , categoryid=  ?, userid= ?, date_approved= ? where poem_id = ?";
@@ -42,6 +44,7 @@ public class PoemDaoJDBC {
         Users usuario = null;
 
         try {
+            Class.forName(driver);
             conn = this.conexionTransaccional != null ? this.conexionTransaccional : Conexion.getConnection();
             pst = conn.prepareStatement(SQL_SELECT);
             rs = pst.executeQuery();
@@ -64,6 +67,8 @@ public class PoemDaoJDBC {
                 poema = new Poem(poem_id,title,poem,fecha1,categoria,usuario,fecha);
                 listapoemas.add(poema); 
             }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(PoemDaoJDBC.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 close(rs);
@@ -86,6 +91,7 @@ public class PoemDaoJDBC {
         int registros = 0;
 
         try {
+            Class.forName(driver);
             con = this.conexionTransaccional != null ? this.conexionTransaccional : Conexion.getConnection();
             stmt = con.prepareStatement(SQL_INSERT);
             stmt.setString(1, poema.getTitle());
@@ -97,6 +103,8 @@ public class PoemDaoJDBC {
             registros = stmt.executeUpdate(); 
             System.out.println("Registro Insertado Poema " + registros);
 
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(PoemDaoJDBC.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 close(stmt);
@@ -118,6 +126,7 @@ public class PoemDaoJDBC {
         int registros = 0;
 
         try {
+            Class.forName(driver);
             con = this.conexionTransaccional != null ? this.conexionTransaccional : Conexion.getConnection();
             stmt = con.prepareStatement(SQL_UPDATE);
             stmt.setString(1, poema.getTitle());
@@ -130,6 +139,8 @@ public class PoemDaoJDBC {
             registros = stmt.executeUpdate();
             System.out.println("Registro actualizado de poema" + registros);
 
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(PoemDaoJDBC.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 close(stmt);
@@ -151,11 +162,14 @@ public class PoemDaoJDBC {
         int resultado = 0;
 
         try {
+            Class.forName(driver);
             con = this.conexionTransaccional != null ? this.conexionTransaccional : Conexion.getConnection();
             stmt = con.prepareStatement(SQL_DELETE);
             stmt.setInt(1, poema.getPoem_id());
             resultado = stmt.executeUpdate();
             System.out.println("Se ha eliminado el poema");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(PoemDaoJDBC.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 close(stmt);

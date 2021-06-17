@@ -1,6 +1,7 @@
 
 package conexion;
 
+import static conexion.CategoriesDaoJDBC.driver;
 import static conexion.Conexion.close;
 import static conexion.UsersDaoJDBC.SQL_DELETE;
 import static conexion.UsersDaoJDBC.SQL_INSERT;
@@ -18,11 +19,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class TokensDaoJDBC {
     private Connection conexionTransaccional;
-
+    public static final String driver = "com.mysql.jdbc.Driver";
     public static final String SQL_SELECT = "SELECT token_id, token, user_id, token_expires FROM prueba_node.tokens;";
     public static final String SQL_INSERT = "INSERT INTO prueba_node.tokens(token, user_id, token_expires) VALUES(?,?,?)";
     public static final String SQL_UPDATE = "UPDATE prueba_node.tokens SET token=?, user_id=?, token_expires=? where token_id = ?";
@@ -41,6 +44,7 @@ public class TokensDaoJDBC {
         
 
         try {
+            Class.forName(driver);
             conn = this.conexionTransaccional != null ? this.conexionTransaccional : Conexion.getConnection();
             pst = conn.prepareStatement(SQL_SELECT);
             rs = pst.executeQuery();
@@ -56,6 +60,8 @@ public class TokensDaoJDBC {
                 token = new Tokens(token_id, tokens, usuario, fecha);
                 listatokens.add(token);
             }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(TokensDaoJDBC.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 close(rs);
@@ -79,6 +85,7 @@ public class TokensDaoJDBC {
         int registros = 0;
 
         try {
+            Class.forName(driver);
             con = this.conexionTransaccional != null ? this.conexionTransaccional : Conexion.getConnection();
             stmt = con.prepareStatement(SQL_INSERT);
             stmt.setString(1, token.getToken());
@@ -89,6 +96,8 @@ public class TokensDaoJDBC {
             // en la base de datos , es decir retorna un entero.
             System.out.println("Registros Token Insertados Correctamente " + registros);
 
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(TokensDaoJDBC.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 close(stmt);
@@ -109,6 +118,7 @@ public class TokensDaoJDBC {
         int registros = 0;
 
         try {
+            Class.forName(driver);
             con = this.conexionTransaccional != null ? this.conexionTransaccional : Conexion.getConnection();
             stmt = con.prepareStatement(SQL_UPDATE);
             stmt.setString(1, token.getToken());
@@ -118,6 +128,8 @@ public class TokensDaoJDBC {
             registros = stmt.executeUpdate();
             System.out.println("Registros actualizados de tokens" + registros);
 
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(TokensDaoJDBC.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 close(stmt);
@@ -139,11 +151,14 @@ public class TokensDaoJDBC {
         int resultado = 0;
 
         try {
+            Class.forName(driver);
             con = this.conexionTransaccional != null ? this.conexionTransaccional : Conexion.getConnection();
             stmt = con.prepareStatement(SQL_DELETE);
             stmt.setInt(1, token.getToken_id());
             resultado = stmt.executeUpdate();
             System.out.println("Se ha eliminado el token ");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(TokensDaoJDBC.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 close(stmt);

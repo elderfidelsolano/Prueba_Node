@@ -10,10 +10,13 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class CategoriesDaoJDBC {
     
     private Connection conexionTransaccional;
+    public static final String driver = "com.mysql.jdbc.Driver";
     public static final String SQL_SELECT = "SELECT category_id, category FROM prueba_node.categories";
     public static final String SQL_INSERT = "INSERT INTO categories(category) VALUES(?)";
     public static final String SQL_UPDATE = "UPDATE categories SET category=? where category_id= ?";
@@ -35,6 +38,7 @@ public class CategoriesDaoJDBC {
         Categories categoria = null;
 
         try {
+            Class.forName(driver);
             conn = this.conexionTransaccional != null ? this.conexionTransaccional : Conexion.getConnection();
             pst = conn.prepareStatement(SQL_SELECT);
             rs = pst.executeQuery();
@@ -45,6 +49,8 @@ public class CategoriesDaoJDBC {
                 categoria = new Categories(category_id,categoria1);
                 listacategorias.add(categoria); 
             }
+        } catch (ClassNotFoundException ex) {
+           ex.printStackTrace(System.out);
         } finally {
             try {
                 close(rs);
@@ -69,12 +75,15 @@ public class CategoriesDaoJDBC {
         int registros = 0;
 
         try {
+            Class.forName(driver);
             con = this.conexionTransaccional != null ? this.conexionTransaccional : Conexion.getConnection();
             stmt = con.prepareStatement(SQL_INSERT);
             stmt.setString(1, categoria.getCategory());
             registros= stmt.executeUpdate();
             System.out.println("Registro Insertado Categoria " + registros);
 
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace(System.out);
         } finally {
             try {
                 close(stmt);
@@ -96,6 +105,7 @@ public class CategoriesDaoJDBC {
         int registros = 0;
 
         try {
+            Class.forName(driver);
             con = this.conexionTransaccional != null ? this.conexionTransaccional : Conexion.getConnection();
             stmt = con.prepareStatement(SQL_UPDATE);
             stmt.setString(1, categoria.getCategory());
@@ -103,6 +113,8 @@ public class CategoriesDaoJDBC {
             registros = stmt.executeUpdate();
             System.out.println("Registro actualizado de categoria" + registros);
 
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace(System.out);
         } finally {
             try {
                 close(stmt);
@@ -123,11 +135,14 @@ public class CategoriesDaoJDBC {
         int resultado = 0;
 
         try {
+            Class.forName(driver);
             con = this.conexionTransaccional != null ? this.conexionTransaccional : Conexion.getConnection();
             stmt = con.prepareStatement(SQL_DELETE);
             stmt.setInt(1, categoria.getCategory_id());
             resultado = stmt.executeUpdate();
             System.out.println("Se ha eliminado la categoria "+ resultado);
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace(System.out);
         } finally {
             try {
                 close(stmt);

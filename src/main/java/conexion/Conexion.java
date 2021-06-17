@@ -9,8 +9,9 @@ import java.sql.Statement;
 import javax.sql.DataSource;
 import org.apache.commons.dbcp2.BasicDataSource;
 // Pool de Conexiones
-public class Conexion {
 
+public class Conexion {
+    public static String driver = "com.mysql.cj.jdbc.Driver";
     public static final String JDBC_URL = "jdbc:mysql://localhost:3306/prueba_node?useSSL=false&useTimezone=true&serverTimezone=UTC&allowPublicRetrieval=true";
     public static final String USUARIO = "root";
     public static final String PASSWORD = "admin";
@@ -23,7 +24,7 @@ public class Conexion {
         ds.setUsername(USUARIO);
         ds.setPassword(PASSWORD);
         // Se define el tamaño inicial del pol de conexiones
-        ds.setInitialSize(7);
+        //ds.setInitialSize(7);
         return ds;
     }
     

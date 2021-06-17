@@ -1,70 +1,123 @@
 
 
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="conexion.Conexion" %>
+<%@page import="conexion.UsersDaoJDBC" %>
+<%@page import="domain.Users" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" type="text/css" href="recursos/estilos.css"/> 
-        <title>JSP Page</title>
+        <title>Pagina Node </title>
     </head>
     <body>
         <form name="form1" action="#" method="post"
-          onsubmit="return validarForma(this)">
-        <input type="hidden" name="oculto" value="valorOculto">
+          onsubmit="#">
+       
         <table width="200" id="enfasis-columna">
+            <%
+                   List<Users> lista = new ArrayList<Users>();
+                try{
+                    String driver = "com.mysql.cj.jdbc.Driver";
+                    Class.forName(driver);
+                    Connection conexion = Conexion.getConnection();
+                    UsersDaoJDBC usuario = new UsersDaoJDBC(conexion);
+                   lista=usuario.select();
+                   
+                }catch(Exception ex){
+                           ex.printStackTrace(System.out);
+                }
+                %>
             <caption>
-                Formulario de Registro de Datos Ususarios
+                Formulario de Registro Usuarios Node
             </caption>
             <tr>
                 <td class="columna">
-                    Primer Nombre
+                    Nombre (*)
                 </td>
-                <td>
-                    <input class="default" type="text" name="nombre" value="EIngresar Nombre"
-                           onfocus="this.select()"/>
-                </td>
-            </tr>
-            <tr>
                 <td class="columna">
-                    Apellido
+                    Apellido (*)
                 </td>
-                <td>
-                    <input class="default" type="text" name="apellido" value="Ingresar Apellido"
-                           onfocus="this.select()"/>
-                </td>
-            </tr>
-            
-            <tr>
                 <td class="columna">
-                    Email
+                    Email (*)
                 </td>
-                <td>
-                    <input class="default" type="text" name="email" value="Ingresar Email"
-                           onfocus="this.select()"/>
-                </td>
-            </tr>
-            
-            <tr>
                 <td class="columna">
-                    Email
+                    Usuario (*)
                 </td>
-                <td>
-                    <input class="default" type="text" name="usuario" value="Ingresar Usuario"
-                           onfocus="this.select()"/>
-                </td>
-            </tr>
-            
-            <tr>
                 <td class="columna">
-                    Email
+                    Password (*)
                 </td>
-                <td>
-                    <input class="default" type="text" name="frase" value="Ingresar Frase"
-                           onfocus="this.select()"/>
+                <td class="columna">
+                    Administrador (*)
+                </td>
+                <td class="columna">
+                    Fecha Registro (*)
                 </td>
             </tr>
-            <tr>
+            <%for(Users usuario1: lista){
+             System.out.println("Nombre "+ usuario1.getFirst_name());
+             System.out.println("Fecha"+  new SimpleDateFormat("dd/MM/yyyy").format(usuario1.getDate_registered()));
+             %>
+            <tr> 
+             
+                <td>
+                    <input class="default" type="text" name="nombre" value="<%= usuario1.getFirst_name()%>"
+                           onfocus="this.select()"/>
+                </td>
+                
+                <td>
+                    <input class="default" type="text" name="apellido" value="<%= usuario1.getLast_name()%>"
+                           onfocus="this.select()"/>
+                </td>
+                 <td>
+                    <input class="default" type="email" name="email" value="<%= usuario1.getLast_name()%>"
+                           onfocus="this.select()"/>
+                </td>
+                <td>
+                    <input class="default" type="text" name="usuario" value="<%= usuario1.getUsername()%>"
+                           onfocus="this.select()"/>
+                </td>
+                
+                 <td>
+                    <input class="default" type="password" name="password" value="<%= usuario1.getPass_phrase()%>"
+                           onfocus="this.select()"/>
+                </td>
+                
+                <td>
+                    <select  name="rol" class="default">
+                        <!--<option value="">Seleccionar</option>-->
+                        <% if (usuario1.getIs_admin()==1) { %>
+                        <option value="">Seleccionar</option>
+                        <option value="<%=usuario1.getIs_admin()%>" selected>Administrador</option>
+                        <option value="2">Administrador</option>
+                        
+                        <% }else{%>
+                        <option value="">Seleccionar</option>
+                         <option value="1">Administrador</option>
+                        <option value="<%=usuario1.getIs_admin()%>" selected>Trabajador</option>
+                        <% }%> 
+                        
+                    </select>
+                </td>
+                <% 
+                //SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+                //String cadena=  formato.format(usuario1.getDate_registered());
+               // Date fecha_s = (Date) formato.parse(cadena);
+                %>
+                 <td>
+                    <input class="default" type="date" name="fecha_registro" value="<%= new SimpleDateFormat("yyyy-MM-dd").format(usuario1.getDate_registered()) %>"
+                           onfocus="this.select()"/>
+                </td>
+                <%}%>
+            </tr>               
+            <!-- <tr>
                 <td class="columna">
                     Email
                 </td>
@@ -73,6 +126,7 @@
                            onfocus="this.select()"/>
                 </td>
             </tr>
+           
             <tr>
                 <td class="columna">
                     Tecnologias de Internet(*)
@@ -97,18 +151,8 @@
 
             </tr>
             <tr>
-                <td class="columna">
-                    Ocupacion (*)
-                </td>
-                <td>
-                    <select  name="ocupacion" class="default">
-                        <option value="">Seleccionar</option>
-                        <option value="1">Profesor</option>
-                        <option value="2">Ingeniero</option>
-                        <option value="3">Jubilado</option>
-                        <option value="4">Otro</option>
-                    </select>
-                <td>
+                
+                
             </tr>
             <tr>
                 <td class="columna">
@@ -132,7 +176,7 @@
                     Escribir un texto    
                     </textarea>
                 <td>
-            </tr>
+            </tr> -->
             <tr style="text-align: center">
                 <td>
                     <input type="reset" value="Limpiar" class="default"/>

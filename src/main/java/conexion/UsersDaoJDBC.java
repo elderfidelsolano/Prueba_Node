@@ -1,5 +1,6 @@
 package conexion;
 
+import static conexion.CategoriesDaoJDBC.driver;
 import static conexion.Conexion.*;
 import domain.Users;
 import java.sql.Connection;
@@ -18,7 +19,7 @@ import java.util.logging.Logger;
 public class UsersDaoJDBC {
 
     private Connection conexionTransaccional;
-
+    public static final String driver = "com.mysql.cj.jdbc.Driver";
     public static final String SQL_SELECT = "SELECT user_id, first_name, last_name, email, username, pass_phrase, is_admin, date_registered, profile_pic, registration_comfirmed FROM users;";
     public static final String SQL_INSERT = "INSERT INTO prueba_node.Users(first_name, last_name, email, username, pass_phrase, is_admin, date_registered, profile_pic, registration_comfirmed) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
     public static final String SQL_UPDATE = "UPDATE prueba_node.users SET first_name=? , last_name = ?, email =?, username=? , pass_phrase=?, is_admin=?, date_registered = ? , profile_pic=?, registration_comfirmed = ? where user_id = ?";
@@ -54,6 +55,7 @@ public class UsersDaoJDBC {
         List<Users> listausuarios = new ArrayList<>();
 
         try {
+            Class.forName(driver);
             conn = this.conexionTransaccional != null ? this.conexionTransaccional : Conexion.getConnection();
             pst = conn.prepareStatement(SQL_SELECT);
             rs = pst.executeQuery();
@@ -75,6 +77,8 @@ public class UsersDaoJDBC {
                 usuario = new Users(idPersona, first_name, last_name, email, username, pass_phrase, is_admin, fecha, profile_pic, registration_confirmed);
                 listausuarios.add(usuario);
             }
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace(System.out);
         } finally {
             try {
                 close(rs);
@@ -97,6 +101,7 @@ public class UsersDaoJDBC {
         int registros = 0;
 
         try {
+            Class.forName(driver);
             con = this.conexionTransaccional != null ? this.conexionTransaccional : Conexion.getConnection();
             stmt = con.prepareStatement(SQL_INSERT);
             stmt.setString(1, usuario.getFirst_name());
@@ -114,6 +119,8 @@ public class UsersDaoJDBC {
             // en la base de datos , es decir retorna un entero.
             System.out.println("Registros Insertados Usuarios " + registros);
 
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace(System.out);
         } finally {
             try {
                 close(stmt);
@@ -135,6 +142,7 @@ public class UsersDaoJDBC {
         int registros = 0;
 
         try {
+            Class.forName(driver);
             con = this.conexionTransaccional != null ? this.conexionTransaccional : Conexion.getConnection();
             stmt = con.prepareStatement(SQL_UPDATE);
             stmt.setString(1, usuario.getFirst_name());
@@ -151,6 +159,8 @@ public class UsersDaoJDBC {
             registros = stmt.executeUpdate();
             System.out.println("Registros actualizados de usuario" + registros);
 
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace(System.out);
         } finally {
             try {
                 close(stmt);
@@ -172,11 +182,14 @@ public class UsersDaoJDBC {
         int resultado = 0;
 
         try {
+            Class.forName(driver);
             con = this.conexionTransaccional != null ? this.conexionTransaccional : Conexion.getConnection();
             stmt = con.prepareStatement(SQL_DELETE);
             stmt.setInt(1, usuario.getUser_id());
             resultado = stmt.executeUpdate();
             System.out.println("Se ha eliminado el usuario");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(UsersDaoJDBC.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 close(stmt);
